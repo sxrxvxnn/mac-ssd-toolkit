@@ -4,6 +4,9 @@ Use an external SSD as your Mac's primary storage — with automation, monitorin
 
 ## Preview
 
+![SSD Tools Menu](assets/ssd-menu.png)
+![Mac Tools Menu](assets/mac-menu.png)
+
 ```
   ╔═══════════════════════════════════════════════════════════════════════╗
   ║                                                                       ║

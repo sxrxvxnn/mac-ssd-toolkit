@@ -1,7 +1,7 @@
 #!/bin/zsh
 # Mac Tools Menu
 
-SCRIPTS_DIR="{{SSD_MOUNT}}/Dev/scripts/mac-tools"
+SCRIPTS_DIR="/Volumes/007/Dev/scripts/mac-tools"
 
 print_menu() {
   clear
@@ -29,8 +29,8 @@ print_menu() {
   IP=$(ipconfig getifaddr en0 2>/dev/null || echo "no wifi")
 
   echo -e "  ${DIM}┌─────────────────────────────────────────────────────────────────────┐${RESET}"
-  printf "  ${DIM}│${RESET}  ${GREEN}CPU${RESET} ${BOLD}${CPU}%%${RESET}   ${CYAN}Battery${RESET} ${BOLD}${BATTERY}${RESET} ${DIM}(${CHARGING})${RESET}   ${YELLOW}Uptime${RESET} ${BOLD}${UPTIME}${RESET}  ${DIM}│${RESET}\n"
-  printf "  ${DIM}│${RESET}  ${GREEN}Wifi${RESET} ${BOLD}${WIFI}${RESET}   ${CYAN}IP${RESET} ${BOLD}${IP}${RESET}  ${DIM}│${RESET}\n"
+  echo -e "  ${DIM}│${RESET}  ${GREEN}CPU${RESET} ${BOLD}${CPU}%${RESET}   ${CYAN}Battery${RESET} ${BOLD}${BATTERY}${RESET} ${DIM}(${CHARGING})${RESET}   ${YELLOW}Uptime${RESET} ${BOLD}${UPTIME}${RESET}  ${DIM}│${RESET}"
+  echo -e "  ${DIM}│${RESET}  ${GREEN}Wifi${RESET} ${BOLD}${WIFI}${RESET}   ${CYAN}IP${RESET} ${BOLD}${IP}${RESET}  ${DIM}│${RESET}"
   echo -e "  ${DIM}└─────────────────────────────────────────────────────────────────────┘${RESET}"
   echo ""
 
@@ -92,7 +92,7 @@ run_action() {
       echo "  ─────────────────────────────────────"
       top -l 1 -s 0 | grep -E "CPU usage|Load Avg|PhysMem"
       echo ""
-      df -h / {{SSD_MOUNT}} 2>/dev/null | awk 'NR==1{print "  "$0} NR>1{printf "  %-20s used:%-8s free:%s\n", $9, $3, $4}'
+      df -h / /Volumes/007 2>/dev/null | awk 'NR==1{print "  "$0} NR>1{printf "  %-20s used:%-8s free:%s\n", $9, $3, $4}'
       ;;
     2|battery-health)
       echo "  ▶ Battery Health"
@@ -128,12 +128,12 @@ run_action() {
     6|app-usage)
       echo "  ▶ App Usage Report"
       echo "  ─────────────────────────────────────"
-      {{SSD_MOUNT}}/Dev/scripts/ssd-tools/17-app-usage-tracker.sh --report 2>/dev/null
+      /Volumes/007/Dev/scripts/ssd-tools/17-app-usage-tracker.sh --report 2>/dev/null
       ;;
     7|startup-items)
       echo "  ▶ Startup Agents"
       echo "  ─────────────────────────────────────"
-      echo "  -- Your agents (com.{{USERNAME}}*) --"
+      echo "  -- Your agents (com.shravan.*) --"
       launchctl list | grep shravan | awk '{printf "  %-42s exit:%s\n", $3, $1}'
       echo ""
       echo "  -- Third party --"
@@ -147,7 +147,7 @@ run_action() {
     9|clear-caches)
       echo "  ▶ Clearing Caches"
       echo "  ─────────────────────────────────────"
-      {{SSD_MOUNT}}/Dev/scripts/ssd-tools/2-cache-cleanup.sh
+      /Volumes/007/Dev/scripts/ssd-tools/2-cache-cleanup.sh
       ;;
     10|brew-update)
       echo "  ▶ Brew Update + Upgrade + Cleanup"
@@ -158,7 +158,7 @@ run_action() {
     11|run-all-agents)
       echo "  ▶ Triggering all shravan agents"
       echo "  ─────────────────────────────────────"
-      for plist in ~/Library/LaunchAgents/com.{{USERNAME}}*.plist; do
+      for plist in ~/Library/LaunchAgents/com.shravan.*.plist; do
         name=$(basename $plist .plist)
         launchctl kickstart -k "gui/$(id -u)/$name" 2>/dev/null && echo "  ✓ $name" || echo "  ⚠ $name"
       done
