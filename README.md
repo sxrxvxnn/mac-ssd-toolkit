@@ -2,6 +2,74 @@
 
 Use an external SSD as your Mac's primary storage — with automation, monitoring, and a terminal menu system.
 
+## Preview
+
+```
+  ╔═══════════════════════════════════════════════════════════════════════╗
+  ║                                                                       ║
+  ║                      ◈  SSD TOOLS — 007  ◈                           ║
+  ║                                                                       ║
+  ╚═══════════════════════════════════════════════════════════════════════╝
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  ● SSD 007   899G free / 33G used          ● Mac Internal  40G free │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  STORAGE & SYSTEM
+  ┌──────┬──────────────────────┬────────────────────────────────────────┐
+  │  1   │  mount-check         │  Check SSD mount + symlink health      │
+  │  2   │  cache-cleanup       │  Clear caches (Library, npm, pnpm)     │
+  │  3   │  low-disk-alert      │  Check internal Mac free space         │
+  │  7   │  duplicate-finder    │  Scan SSD for duplicate files          │
+  │ 12   │  ssd-health          │  SSD space + fill prediction           │
+  │ 23   │  auto-eject          │  Eject / mount / status SSD            │
+  └──────┴──────────────────────┴────────────────────────────────────────┘
+
+  DEV & CODE
+  ┌──────┬──────────────────────┬────────────────────────────────────────┐
+  │  4   │  node-modules        │  Find/delete stale node_modules        │
+  │  5   │  dev-backup          │  Rsync active projects to backup       │
+  │  9   │  git-status          │  Uncommitted changes across projects   │
+  │ 10   │  stale-branches      │  Delete merged git branches            │
+  │ 20   │  env-backup          │  Backup all .env files                 │
+  └──────┴──────────────────────┴────────────────────────────────────────┘
+
+  Enter number or name  •  q to quit
+  ❯
+```
+
+```
+  ╔═══════════════════════════════════════════════════════════════════════╗
+  ║                                                                       ║
+  ║                    ◈  MAC TOOLS — SHRAVAN  ◈                         ║
+  ║                                                                       ║
+  ╚═══════════════════════════════════════════════════════════════════════╝
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  CPU 12%   Battery 100% (charged)   Uptime 2 days                   │
+  │  Wifi MyNetwork   IP 192.168.1.6                                     │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  SYSTEM
+  ┌──────┬──────────────────────┬────────────────────────────────────────┐
+  │  1   │  system-stats        │  Live CPU, RAM, disk, network          │
+  │  2   │  battery-health      │  Battery cycles, capacity, health      │
+  │  3   │  wifi-info           │  Wifi network, IP, signal              │
+  │  4   │  running-processes   │  Top 10 CPU + RAM hogs                 │
+  └──────┴──────────────────────┴────────────────────────────────────────┘
+
+  SECURITY
+  ┌──────┬──────────────────────┬────────────────────────────────────────┐
+  │ 13   │  firewall-status     │  Check firewall + stealth mode         │
+  │ 14   │  open-ports          │  Scan all listening ports              │
+  │ 15   │  lock-screen         │  Lock Mac screen immediately           │
+  │ 16   │  ssh-keys            │  List SSH keys + fingerprints          │
+  └──────┴──────────────────────┴────────────────────────────────────────┘
+
+  Enter number or name  •  q to quit
+  ❯
+```
+
 Built for Macs with limited internal storage (128–256GB). Moves your dev projects, toolchains, and user folders to SSD transparently via symlinks, then automates backup, cleanup, and system health.
 
 ---
