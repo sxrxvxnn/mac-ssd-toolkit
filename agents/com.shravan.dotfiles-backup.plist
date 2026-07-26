@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.{{USERNAME}}dotfiles-backup</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-c</string>
+    <string>until [ -d {{SSD_MOUNT}} ]; do sleep 5; done; {{SSD_MOUNT}}/Dev/scripts/ssd-tools/27-dotfiles-backup.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>22</integer>
+    <key>Minute</key>
+    <integer>30</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/tmp/dotfiles-backup.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/dotfiles-backup.log</string>
+</dict>
+</plist>
