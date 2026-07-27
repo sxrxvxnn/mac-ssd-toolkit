@@ -128,7 +128,63 @@ Type `ssd` or `mac` to launch.
 
 - macOS 12+
 - Homebrew (`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`)
-- An external SSD formatted as HFS+ or APFS
+- An external SSD **formatted as APFS** (not HFS+, not ExFAT)
+
+---
+
+## Before You Start — Important Setup Notes
+
+Lessons learned from real-world setup. Read these before running the installer.
+
+### 1. Format your SSD as APFS (not HFS+)
+
+HFS+ can develop filesystem corruption under heavy use with symlinks + Time Machine + active writes simultaneously. APFS is more resilient and is what macOS is optimized for.
+
+**How to format:**
+1. Open Disk Utility
+2. Select your SSD → click **Erase**
+3. Format: **APFS**, Scheme: **GUID Partition Map**
+4. Name it (e.g. `007`)
+
+> If your SSD came pre-formatted as HFS+ and you've already set up symlinks — reformat now before continuing. Back up first.
+
+### 2. Disable WD Disk Locker before setup (WD drives only)
+
+If you have a WD drive with hardware lock enabled, it will prevent writes even after granting Full Disk Access. Disable it first:
+- Open **WD Discovery** → unlock the drive
+- Or reformat the drive (this removes the lock)
+
+### 3. Grant Full Disk Access to Terminal + Chrome
+
+**System Settings → Privacy & Security → Full Disk Access:**
+- Add **Terminal** (required for scripts to work)
+- Add **Google Chrome** (required for downloads to SSD)
+
+**System Settings → Privacy & Security → Files and Folders:**
+- Google Chrome → enable **Downloads Folder** + external drives
+
+### 4. Set Chrome download path to real SSD path (not symlink)
+
+Chrome's sandbox doesn't follow symlinks reliably. Set the download location to the actual SSD path:
+
+**Chrome → Settings → Downloads → Change → press Cmd+Shift+G → paste:**
+```
+/Volumes/YOUR_SSD_NAME/Downloads
+```
+
+### 5. Time Machine: use weekly backups, not hourly
+
+If you set Time Machine to hourly on the same SSD you're using as primary storage, it creates heavy I/O that can cause filesystem issues. Weekly is safer and still gives you solid recovery points.
+
+### 6. Screenshot save path
+
+macOS screenshot tools (Cmd+Shift+5) don't reliably follow symlinks for save location. Set it explicitly:
+```bash
+defaults write com.apple.screencapture location /Volumes/YOUR_SSD_NAME/Desktop
+killall SystemUIServer
+```
+
+---
 
 ---
 
@@ -167,6 +223,43 @@ reload     # Reload .zshrc
 ```bash
 ./uninstall.sh
 ```
+
+---
+
+## Troubleshooting
+
+**Chrome shows "Something went wrong" when downloading**
+- Grant Chrome Full Disk Access in System Settings → Privacy & Security
+- Set Chrome download path to the real SSD path (not `~/Downloads` symlink): `/Volumes/YOUR_SSD/Downloads`
+
+**SSD writes failing / "Invalid argument" error**
+- Your SSD filesystem has errors. Run Disk Utility → First Aid on the drive
+- If First Aid fails, back up data and reformat as APFS
+
+**First Aid fails with "Unable to unmount volume" (-69673)**
+- The drive is in use. Quit all apps, close all terminals, then retry
+- If still failing, boot into Recovery Mode (hold Power on Apple Silicon) → Disk Utility → First Aid
+
+**"File system check exit code is 8" / First Aid fails completely**
+- Filesystem is corrupted beyond macOS repair
+- Back up all data: `rsync -av /Volumes/007/ ~/SSD-backup/`
+- Erase and reformat as APFS in Disk Utility
+- Restore data back
+
+**LaunchAgents failing (exit code 127)**
+- Scripts run before SSD mounts at boot — this is handled automatically by the installer with a wait loop
+- If still failing: `launchctl unload ~/Library/LaunchAgents/com.USERNAME.AGENT.plist && launchctl load ~/Library/LaunchAgents/com.USERNAME.AGENT.plist`
+
+**Screenshots not saving to SSD Desktop**
+- Run: `defaults write com.apple.screencapture location /Volumes/YOUR_SSD/Desktop && killall SystemUIServer`
+
+**QuickTime screen recording won't save**
+- System Settings → Privacy & Security → Screen Recording → add QuickTime Player
+- Use Cmd+Shift+5 (built-in) as alternative
+
+**SSD not mounting on boot**
+- Normal for external drives — scripts use a wait loop to handle this
+- Check: `ssd 1` (mount-check) after plugging in
 
 ---
 
