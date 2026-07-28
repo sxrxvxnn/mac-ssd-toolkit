@@ -2,6 +2,13 @@
 
 Use an external SSD as your Mac's primary storage — with automation, monitoring, and a terminal menu system.
 
+![Stars](https://img.shields.io/github/stars/sxrxvxnn/mac-ssd-toolkit?style=flat-square)
+![License](https://img.shields.io/github/license/sxrxvxnn/mac-ssd-toolkit?style=flat-square)
+![macOS](https://img.shields.io/badge/macOS-12%2B-blue?style=flat-square&logo=apple)
+![Shell](https://img.shields.io/badge/shell-zsh-green?style=flat-square)
+
+> If this helped you, consider giving it a ⭐ — it helps others find it.
+
 ## Preview
 
 ![SSD Tools Menu](assets/ssd-menu.png)
@@ -74,6 +81,47 @@ Use an external SSD as your Mac's primary storage — with automation, monitorin
 ```
 
 Built for Macs with limited internal storage (128–256GB). Moves your dev projects, toolchains, and user folders to SSD transparently via symlinks, then automates backup, cleanup, and system health.
+
+---
+
+## Table of Contents
+
+- [How it works](#how-it-works)
+- [Results](#results)
+- [What's included](#whats-included)
+- [Install](#install)
+- [Before You Start](#before-you-start--important-setup-notes)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+
+---
+
+## How it works
+
+macOS follows symlinks transparently — apps and tools have no idea they're reading from an external drive.
+
+```bash
+# Move Downloads to SSD
+mv ~/Downloads /Volumes/007/Downloads
+ln -s /Volumes/007/Downloads ~/Downloads
+
+# Everything that writes to ~/Downloads now writes to the SSD
+# No config changes needed in any app
+```
+
+Do this for Downloads, Documents, Desktop, Movies, all dev projects, and toolchains (`.nvm`, `.rustup`, `.cargo`, `.npm`, etc.) — and your internal drive clears up fast.
+
+---
+
+## Results
+
+| Before | After |
+|--------|-------|
+| 23GB free on internal | 36GB free (13GB+ recovered) |
+| Manual backups (or none) | Nightly automated rsync |
+| No disk monitoring | Hourly low-disk alerts |
+| Scattered dotfiles | Nightly versioned backup |
+| No SSD security | Serial number lock |
 
 ---
 
