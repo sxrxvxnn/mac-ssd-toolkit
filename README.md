@@ -311,6 +311,12 @@ reload     # Reload .zshrc
 
 ---
 
+## Related
+
+- [claude-plugins](https://github.com/sxrxvxnn/claude-plugins) — Security, cost tracking, and workflow hooks for Claude Code (`npx claude-plugins`)
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) — contributions welcome. New scripts, bug fixes, new mac tool ideas, platform improvements.
